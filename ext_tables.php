@@ -2,7 +2,7 @@
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
-
+$extensionName = "mmimagemap";
 $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 $iconRegistry->registerIcon(
     'mmimagemap',
@@ -10,15 +10,13 @@ $iconRegistry->registerIcon(
     ['source' => 'EXT:mmimagemap/Resources/Public/Icons/module-mmimagemap.svg']
 );
 
-$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
+//$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
 $pluginSignature = strtolower($extensionName).'_pi1';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:'.$_EXTKEY.'/Configuration/FlexForms/setup.xml');
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin($_EXTKEY, 'Pi1', 'Mmimagemap');
+//$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 
 if (TYPO3_MODE === 'BE') {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/Configuration/PageTS/ModWizards.ts">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $extensionName . '/Configuration/PageTS/ModWizards.ts">'
     );
 }
 
@@ -27,7 +25,7 @@ if (TYPO3_MODE === 'BE') {
     * Registers a Backend Module
 */
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'MikelMade.' . $_EXTKEY,
+            'MikelMade.Mmimagemap',
         'file',	 // Make module a submodule of 'file'
         'mod1',	// Submodule key
         '1',						// Position
@@ -36,9 +34,9 @@ if (TYPO3_MODE === 'BE') {
         ),
         array(
             'access' => 'user,group',
-            'icon'   => 'EXT:' . $_EXTKEY . '/Resources/Public/Icons/module-mmimagemap.svg',
-            'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_be.xlf',
+            'icon'   => 'EXT:' . $extensionName . '/Resources/Public/Icons/module-mmimagemap.svg',
+            'labels' => 'LLL:EXT:' . $extensionName . '/Resources/Private/Language/locallang_be.xlf',
         )
     );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'mmimagemap');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extensionName, 'Configuration/TypoScript', 'mmimagemap');

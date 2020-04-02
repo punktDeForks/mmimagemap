@@ -26,6 +26,9 @@ namespace MikelMade\Mmimagemap\Controller;
 
 use TYPO3\CMS\Backend\Form\Element\InputLinkElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  *
@@ -40,14 +43,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
         *
         *	@var \MikelMade\Mmimagemap\Domain\Repository\MapRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $mapRepository;
     
     /**
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\AreaRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $areaRepository;
     
@@ -55,7 +58,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         *	pointRepository
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\PointRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $pointRepository;
     
@@ -63,7 +66,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         *	bcolorsRepository
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\BcolorsRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $bcolorsRepository;
     
@@ -72,7 +75,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         *	contentpopupRepository
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\ContentpopupRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $contentpopupRepository;
 
@@ -107,7 +110,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $this->view->assign('dir', 1);
             $this->view->assign('pathid', $path);
-            $abspath = PATH_site.'fileadmin/'.$path;
+            $abspath = Environment::getPublicPath() . '/'.'fileadmin/'.$path;
             $files = array();
             $dh = opendir($abspath);
             while (($file = readdir($dh)) !== false) {
@@ -172,7 +175,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             } else {
                 $image = $this->mapRepository->CheckForDoubleImages($_FILES['usr_file']['name'], $_FILES['usr_file']['name'], $_POST['path']);
-                move_uploaded_file($_FILES['usr_file']['tmp_name'], PATH_site.'fileadmin/'.$_POST['path'].$image);
+                move_uploaded_file($_FILES['usr_file']['tmp_name'], Environment::getPublicPath() . '/'.'fileadmin/'.$_POST['path'].$image);
             }
             
             $map = new \MikelMade\Mmimagemap\Domain\Model\Map();
@@ -273,14 +276,14 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             if (strlen($image) > 0) {
                 $image = $this->mapRepository->CheckForDoubleImages($_FILES['usr_file']['name'], $_FILES['usr_file']['name'], $_POST['path']);
-                move_uploaded_file($_FILES['usr_file']['tmp_name'], PATH_site.'fileadmin/'.$_POST['path'].$image);
+                move_uploaded_file($_FILES['usr_file']['tmp_name'], Environment::getPublicPath() . '/'.'fileadmin/'.$_POST['path'].$image);
                 $map->setImgfile($image);
                 
                 if (isset($_POST['del_unused'])) {
                     $unused = $this->mapRepository->CheckForUnusedPic($_POST['path'], $previmage, $mapid);
                     if ($unused == true) {
                         \MikelMade\Mmimagemap\Utility\Tx_Mmimagemap_Utility_Div::RemoveThumb($_POST['path'], $previmage);
-                        unlink(PATH_site.'fileadmin/'.$_POST['path'].$previmage);
+                        unlink(Environment::getPublicPath() . '/'.'fileadmin/'.$_POST['path'].$previmage);
                     }
                 }
             }
@@ -295,10 +298,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $unused = $this->mapRepository->CheckForUnusedPic($_POST['path'], $previmage, $mapid);
                 if ($unused == true) {
                     \MikelMade\Mmimagemap\Utility\Tx_Mmimagemap_Utility_Div::RemoveThumb($_POST['path'], $previmage);
-                    unlink(PATH_site.'fileadmin/'.$_POST['path'].$previmage);
+                    unlink(Environment::getPublicPath() . '/'.'fileadmin/'.$_POST['path'].$previmage);
                 }
-                if (strlen($prevaltimage) > 0 && is_file(PATH_site.'uploads/tx_mmimagemap/'.$prevaltimage)) {
-                    unlink(PATH_site.'uploads/tx_mmimagemap/'.$prevaltimage);
+                if (strlen($prevaltimage) > 0 && is_file(Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$prevaltimage)) {
+                    unlink(Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$prevaltimage);
                 }
             }
             
@@ -310,8 +313,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $this->pointRepository->remove($delpoint);
                     $this->pManager->persistAll();
                 }
-                if (strlen($area['fealtfile']) > 0 && is_file(PATH_site.'uploads/tx_mmimagemap/'.$area['fealtfile'])) {
-                    unlink(PATH_site.'uploads/tx_mmimagemap/'.$area['fealtfile']);
+                if (strlen($area['fealtfile']) > 0 && is_file(Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$area['fealtfile'])) {
+                    unlink(Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$area['fealtfile']);
                 }
                 
                 $delarea = $this->areaRepository->findByUid($area['uid']);
@@ -600,8 +603,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $delarea = $this->areaRepository->findByUid((int)$_POST['actiondata']);
             $altfile = $delarea->getFealtfile();
             if (strlen($altfile) > 0) {
-                if (file_exists(PATH_site.'uploads/tx_mmimagemap/'.$altfile)) {
-                    unlink(PATH_site.'uploads/tx_mmimagemap/'.$altfile);
+                if (file_exists(Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$altfile)) {
+                    unlink(Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$altfile);
                 }
             }
             $this->areaRepository->remove($delarea);
@@ -697,8 +700,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->view->assign('close', $_SESSION['mmim_close']);
         $this->view->assign('spoint', $_SESSION['mmim_spoint']);
         $this->view->assign('epoint', $_SESSION['mmim_epoint']);
-        
-        $this->view->assign('elementbrowser', \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('wizard_element_browser'));
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $this->view->assign('elementbrowser', $uriBuilder->buildUriFromRoute('wizard_element_browser'));
         $this->view->assign('token', $_GET['moduleToken']);
         $this->view->assign('blink', $_SESSION['mmim_blink']);
         $this->view->assign('becolors', $becolors);

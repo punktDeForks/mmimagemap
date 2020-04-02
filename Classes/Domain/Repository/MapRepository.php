@@ -1,6 +1,6 @@
 <?php
 namespace MikelMade\Mmimagemap\Domain\Repository;
-
+use TYPO3\CMS\Core\Core\Environment;
 /***************************************************************
  *	Copyright notice
  *
@@ -66,7 +66,7 @@ class MapRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         */
     public function CheckForDoubleImages($origimage, $image, $folder, $suffix=0)
     {
-        $abspath = PATH_site.'fileadmin/'.$folder;
+        $abspath = Environment::getPublicPath() . '/'.'fileadmin/'.$folder;
         $dh = opendir($abspath);
         $double = false;
         while (($file = readdir($dh)) !== false) {
@@ -192,10 +192,10 @@ class MapRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $res = $query->execute(true);
         
         $apic = time().'.png';
-        $abs_apic = PATH_site.'uploads/tx_mmimagemap/'.$apic;
+        $abs_apic = Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$apic;
             
-        $img = PATH_site.'fileadmin/'.$res[0]['folder'].$res[0]['imgfile'];
-        $oldimg = PATH_site.'uploads/tx_mmimagemap/'.$res[0]['altfile'];
+        $img = Environment::getPublicPath() . '/'.'fileadmin/'.$res[0]['folder'].$res[0]['imgfile'];
+        $oldimg = Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$res[0]['altfile'];
         $imgsize = getimagesize($img);
         
         // first, create the overlay with the borders that should always be visible on the frontend
@@ -213,9 +213,9 @@ class MapRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 
                 $simg = $abs_apic;
                 if (!is_file($abs_apic)) {
-                    $simg = PATH_site.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png -resize '.$imgsize[0].'x'.$imgsize[1].'!';
+                    $simg = Environment::getPublicPath() . '/'.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png -resize '.$imgsize[0].'x'.$imgsize[1].'!';
                     if (preg_match("/WIN/", PHP_OS)) {
-                        $simg = ' "'.PATH_site.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png" -resize '.$imgsize[0].'x'.$imgsize[1].'!';
+                        $simg = ' "'.Environment::getPublicPath() . '/'.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png" -resize '.$imgsize[0].'x'.$imgsize[1].'!';
                     }
                 }
                 switch (intval($area['areatype'])) {
@@ -299,15 +299,15 @@ class MapRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         
             if (count($res) > 0) {
                 foreach ($res as $area) {
-                    $ypic = PATH_site.'uploads/tx_mmimagemap/'.$area['uid'].'_'.$apic;
+                    $ypic = Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$area['uid'].'_'.$apic;
                     $timg = $ypic;
                     if (!is_file($ypic)) {
-                        $timg = PATH_site.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png -resize '.$imgsize[0].'x'.$imgsize[1].'!';
+                        $timg = Environment::getPublicPath() . '/'.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png -resize '.$imgsize[0].'x'.$imgsize[1].'!';
                         if (preg_match("/WIN/", PHP_OS)) {
-                            $timg = ' "'.PATH_site.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png" -resize '.$imgsize[0].'x'.$imgsize[1].'!';
+                            $timg = ' "'.Environment::getPublicPath() . '/'.'typo3conf/ext/mmimagemap/Resources/Public/Images/canvas.png" -resize '.$imgsize[0].'x'.$imgsize[1].'!';
                         }
                     }
-                    $oldimg = PATH_site.'uploads/tx_mmimagemap/'.$area['fealtfile'];
+                    $oldimg = Environment::getPublicPath() . '/'.'uploads/tx_mmimagemap/'.$area['fealtfile'];
                 
                     $query2 = $this->createQuery();
                     $query2->statement('SELECT * from tx_mmimagemap_domain_model_point where areaid='.(int)$area['uid'].' order by num asc');

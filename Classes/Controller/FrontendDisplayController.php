@@ -1,6 +1,6 @@
 <?php
 namespace MikelMade\Mmimagemap\Controller;
-
+use TYPO3\CMS\Core\Core\Environment;
 /***************************************************************
  *	Copyright notice
  *
@@ -37,14 +37,14 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     /**
         *
         *	@var \MikelMade\Mmimagemap\Domain\Repository\MapRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $mapRepository;
     
     /**
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\AreaRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $areaRepository;
     
@@ -52,7 +52,7 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         *	pointRepository
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\PointRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $pointRepository;
     
@@ -60,7 +60,7 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         *	bcolorsRepository
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\BcolorsRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $bcolorsRepository;
     
@@ -69,7 +69,7 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         *	contentpopupRepository
         *
         *	@var	\MikelMade\Mmimagemap\Domain\Repository\ContentpopupRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $contentpopupRepository;
 
@@ -109,7 +109,7 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $mapdata = $this->mapRepository->GetMapData($this->settings['map']);
         $mapdata['overlay'] = (strlen($mapdata['altfile']) != 0) ? 'uploads/tx_mmimagemap/'.$mapdata['altfile'] : '';
         
-        $isize = getimagesize(PATH_site.'fileadmin/'.$mapdata['folder'].$mapdata['imgfile']);
+        $isize = getimagesize(Environment::getPublicPath() . '/'.'fileadmin/'.$mapdata['folder'].$mapdata['imgfile']);
         $mapdata['width'] = $isize[0];
         $mapdata['height'] = $isize[1];
         

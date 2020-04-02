@@ -36,7 +36,7 @@ class Map extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * uid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $uid;
@@ -44,7 +44,7 @@ class Map extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * name
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $name;
@@ -52,7 +52,7 @@ class Map extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * imgfile
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $imgfile;
@@ -60,7 +60,7 @@ class Map extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * altfile
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $altfile;
@@ -68,7 +68,7 @@ class Map extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * folder
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $folder;

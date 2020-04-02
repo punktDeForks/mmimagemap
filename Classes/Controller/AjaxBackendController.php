@@ -36,14 +36,14 @@ class Tx_mmimagemap_Controller_AjaxBackendController extends \TYPO3\CMS\Extbase\
     /**
         *
         *	@var \TYPO3\CMS\Extbase\Domain\Repository\MapRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $mapRepository;
     
     /**
         *
         *	@var	\MikelMade\Argenproducts\Domain\Repository\AreaRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $areaRepository;
     
@@ -51,7 +51,7 @@ class Tx_mmimagemap_Controller_AjaxBackendController extends \TYPO3\CMS\Extbase\
         *	pointRepository
         *
         *	@var	\MikelMade\Argenproducts\Domain\Repository\PointRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $pointRepository;
     
@@ -59,7 +59,7 @@ class Tx_mmimagemap_Controller_AjaxBackendController extends \TYPO3\CMS\Extbase\
         *	bcolorsRepository
         *
         *	@var	\MikelMade\Argenproducts\Domain\Repository\BcolorsRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $bcolorsRepository;
     
@@ -68,7 +68,7 @@ class Tx_mmimagemap_Controller_AjaxBackendController extends \TYPO3\CMS\Extbase\
         *	contentpopupRepository
         *
         *	@var	\MikelMade\Argenproducts\Domain\Repository\ContentpopupRepository
-        *	@inject
+        *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $contentpopupRepository;
     

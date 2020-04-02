@@ -37,7 +37,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * uid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $uid;
@@ -45,7 +45,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * areaid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $areaid;
@@ -53,7 +53,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * contentid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $contentid;
@@ -61,7 +61,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * popupwidth
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $popupwidth;
@@ -69,7 +69,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * popupheight
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $popupheight;
@@ -77,7 +77,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * popupx
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $popupx;
@@ -85,7 +85,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * popupy
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $popupy;
@@ -93,7 +93,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * popupbordercolor
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $popupbordercolor;
@@ -101,7 +101,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * popupbackgroundcolor
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $popupbackgroundcolor;
@@ -109,7 +109,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * popupborderwidth
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $popupborderwidth;
@@ -117,7 +117,7 @@ class Contentpopup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * active
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $active;

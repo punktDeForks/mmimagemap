@@ -5,7 +5,7 @@
 ***************************************************************/
 
 namespace MikelMade\Mmimagemap\Utility;
-
+use TYPO3\CMS\Core\Core\Environment;
 /**
  * Class Tx_Mmimagemap_Utility_Div
  * @package argenproducts
@@ -96,13 +96,13 @@ class Tx_Mmimagemap_Utility_Div
         }
         
         $salt = 'mmimagemap';
-        $temppath = PATH_site.'fileadmin/_processed_/mmimagemap';
+        $temppath = Environment::getPublicPath() . '/'.'fileadmin/_processed_/mmimagemap';
         
         if (!is_dir($temppath)) {
             mkdir($temppath, 0755);
         }
         
-        $img_data = getimagesize(PATH_site .'fileadmin/'. $path . $filename);
+        $img_data = getimagesize(Environment::getPublicPath() . '/' .'fileadmin/'. $path . $filename);
         $width		= $img_data['0'];
         $height	 = $img_data['1'];
         
@@ -117,9 +117,9 @@ class Tx_Mmimagemap_Utility_Div
         
         if (!file_exists($new_path)) {
             if (preg_match("/WIN/", PHP_OS)) {
-                exec('"'.rtrim($impath).'" convert -resize '.$new_width.'!x'.$new_height.'! -quality 100 -unsharp 1.5x1.2+1.0+0.10 "'.PATH_site.'fileadmin/'.$path.$filename.'" "'.$new_path.'.jpg"');
+                exec('"'.rtrim($impath).'" convert -resize '.$new_width.'!x'.$new_height.'! -quality 100 -unsharp 1.5x1.2+1.0+0.10 "'.Environment::getPublicPath() . '/'.'fileadmin/'.$path.$filename.'" "'.$new_path.'.jpg"');
             } else {
-                exec($impath.'convert -resize '.$new_width.'!x'.$new_height.'! -quality 100 -unsharp 1.5x1.2+1.0+0.10 '.PATH_site.'fileadmin/'.$path.$filename.' '.$new_path.'.jpg');
+                exec($impath.'convert -resize '.$new_width.'!x'.$new_height.'! -quality 100 -unsharp 1.5x1.2+1.0+0.10 '.Environment::getPublicPath() . '/'.'fileadmin/'.$path.$filename.' '.$new_path.'.jpg');
             }
             rename($new_path.'.jpg', $new_path);
         }
@@ -135,7 +135,7 @@ class Tx_Mmimagemap_Utility_Div
     public static function RemoveThumb($filename, $path)
     {
         $salt = 'mmimagemap';
-        $temppath = PATH_site.'fileadmin/_processed_/mmimagemap';
+        $temppath = Environment::getPublicPath() . '/'.'fileadmin/_processed_/mmimagemap';
         $del_path	 = $temppath.'/'.md5($path.$salt.$filename);
         if (file_exists($del_path)) {
             unlink($del_path);
@@ -150,7 +150,7 @@ class Tx_Mmimagemap_Utility_Div
     */
     public static function GetPicSize($img, $path)
     {
-        $img_data = getimagesize(PATH_site .'fileadmin/'. $path . $img);
+        $img_data = getimagesize(Environment::getPublicPath() . '/' .'fileadmin/'. $path . $img);
         $width		= $img_data['0'];
         $height	 = $img_data['1'];
         

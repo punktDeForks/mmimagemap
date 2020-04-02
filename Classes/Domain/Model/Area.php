@@ -35,33 +35,25 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     
     /**
-        * uid
-        *
-        * @lazy
-        * @var \integer
-        */
-    protected $uid;
-
-    /**
         * mapid
         *
-        * @lazy
-        * @var \integer
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+        * @var int
         */
     protected $mapid;
 
     /**
         * areatype
         *
-        * @lazy
-        * @var \integer
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+        * @var int
         */
     protected $areatype;
     
     /**
         * arealink
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $arealink;
@@ -69,7 +61,7 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * description
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $description;
@@ -77,7 +69,7 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * color
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $color;
@@ -85,7 +77,7 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * param
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $param;
@@ -93,7 +85,7 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * febordercolor
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $febordercolor;
@@ -101,41 +93,32 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * fevisible
         *
-        * @lazy
-        * @var \integer
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+        * @var int
         */
     protected $fevisible;
     
     /**
         * feborderthickness
         *
-        * @lazy
-        * @var \integer
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+        * @var int
         */
     protected $feborderthickness;
     
     /**
         * fealtfile
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $fealtfile;
     
-    /**
-        * Returns the uid
-        *
-        * @return \integer $uid
-        */
-    public function getUid()
-    {
-        return $this->uid;
-    }
-    
+
     /**
         * Returns the mapid
         *
-        * @return \integer $mapid
+        * @return int $mapid
         */
     public function getMapid()
     {
@@ -145,7 +128,7 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * Sets the mapid
         *
-        * @param \integer $mapid
+        * @param int $mapid
         * @return void
         */
     public function setMapid($mapid)
@@ -156,7 +139,7 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * Returns the areatype
         *
-        * @return \integer $areatype
+        * @return int $areatype
         */
     public function getAreatype()
     {
@@ -166,7 +149,7 @@ class Area extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * Sets the areatype
         *
-        * @param \integer $areatype
+        * @param int $areatype
         * @return void
         */
     public function setAreatype($areatype)

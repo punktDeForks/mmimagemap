@@ -9,8 +9,13 @@ if (!defined('TYPO3_MODE')) {
 
 // FE plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'MikelMade.'.$_EXTKEY,
+    "mmimagemap",
     'Pi1',
-    [ 'FrontendDisplay' => 'list' ],
-    [ 'FrontendDisplay' => 'list' ]
+    [
+        \MikelMade\Mmimagemap\Controller\FrontendDisplayController::class => 'list'
+    ],
+    // non-cacheable actions
+    [
+        \MikelMade\Mmimagemap\Controller\FrontendDisplayController::class => 'list'
+    ]
 );

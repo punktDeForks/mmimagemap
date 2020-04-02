@@ -37,7 +37,7 @@ class Point extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * uid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $uid;
@@ -45,7 +45,7 @@ class Point extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * areaid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $areaid;
@@ -53,7 +53,7 @@ class Point extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * num
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $num;
@@ -61,7 +61,7 @@ class Point extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * x
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $x;
@@ -69,7 +69,7 @@ class Point extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * y
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $y;

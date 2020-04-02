@@ -37,7 +37,7 @@ class Bcolors extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * uid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $uid;
@@ -45,7 +45,7 @@ class Bcolors extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * mapid
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \integer
         */
     protected $mapid;
@@ -53,7 +53,7 @@ class Bcolors extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * colorname
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $colorname;
@@ -61,7 +61,7 @@ class Bcolors extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
         * color
         *
-        * @lazy
+        * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
         * @var \string
         */
     protected $color;

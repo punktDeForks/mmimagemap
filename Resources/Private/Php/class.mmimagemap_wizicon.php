@@ -23,6 +23,9 @@
  *	This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
+
 /**
  *
  * @package mmimagemap
@@ -39,7 +42,7 @@ class tx_mmimagemap_wizicon
     public function proc($wizardItems)
     {
         $wizardItems['plugins_mmimagemap_pierror'] = array(
-            'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mmimagemap') . 'Resources/Public/Icons/module-mmimagemap.svg',
+            'icon' => PathUtility::stripPathSitePrefix('mmimagemap') . 'Resources/Public/Icons/module-mmimagemap.svg',
             'title' => $GLOBALS['LANG']->sL('LLL:EXT:mmimagemap/Resources/Private/Language/locallang_be.xlf:tx_mmimagemap.wizard_title'),
             'description' => $GLOBALS['LANG']->sL('LLL:EXT:mmimagemap/Resources/Private/Language/locallang_be.xlf:tx_mmimagemap.wizard_description'),
             'params' => '&defVals[tt_content][CType]=list&&defVals[tt_content][list_type]=mmimagemap_pi1'

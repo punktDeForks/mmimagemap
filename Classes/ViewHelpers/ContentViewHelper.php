@@ -6,7 +6,7 @@ namespace MikelMade\Mmimagemap\ViewHelpers;
  */
 
 
-class ContentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class ContentViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 		// output html since TYPO3 8LTS
 		protected $escapeOutput = false;
