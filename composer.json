@@ -2,8 +2,8 @@
   "name": "mikelmade/mmimagemap",
   "type": "typo3-cms-extension",
   "description": "Create imagemaps in a user friendly way",
-  "version": "8.7.0",
-  "homepage": "",
+  "version": "10.3.0",
+  "homepage": "https://github.com/rmorzh/mmimagemap.git",
   "license": "GPL-2.0+",
   "require": {
     "typo3/cms-core": "^10"
