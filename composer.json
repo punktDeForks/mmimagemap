@@ -3,16 +3,17 @@
   "type": "typo3-cms-extension",
   "description": "Create imagemaps in a user friendly way",
   "version": "10.3.0",
-  "homepage": "https://github.com/rmorzh/mmimagemap.git",
+  "homepage": "https://github.com/daylightsoftware/mmimagemap.git",
   "license": "GPL-2.0+",
   "require": {
-    "typo3/cms-core": "^10"
+    "typo3/cms-core": ">=10.3.0"
   },
-  "autoload": {
-    "psr-4": {
-      "MikelMade\\Mmimagemap\\": "Classes/"
-    }
-  },
+	"autoload": {
+		"psr-4": {
+          "MikelMade\\Mmimagemap\\": "Classes/"
+		}
+	},
+
   "replace": {
   }
 }
