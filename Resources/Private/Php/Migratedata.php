@@ -11,11 +11,16 @@ once. For using it, comment line 15 of this script - and after use I
 recommend to uncomment it again.
 
 */
-
+// copy in ext root and comment next line to execute!
 exit;
-$conf = require_once('../../../../../LocalConfiguration.php');
+$conf = require_once('../../AdditionalConfiguration.php');
 
 $dbc = $conf['DB']['Connections']['Default'];
+$dbc['dbname']	 = $_SERVER['DB_NAME'];
+$dbc['host']	 = $_SERVER['DB_HOST'];
+$dbc['user']	 = $_SERVER['DB_USERNAME'];
+$dbc['password'] = $_SERVER['DB_PASSWORD'];
+$dbc['port']	 = 3306;
 
 $database = mysqli_connect($dbc['host'], $dbc['user'], $dbc['password'], $dbc['dbname']);
 mysqli_query($database, "SET NAMES 'utf8'", MYSQLI_USE_RESULT);

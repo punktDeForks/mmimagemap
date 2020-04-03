@@ -414,6 +414,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $newarea = new \MikelMade\Mmimagemap\Domain\Model\Area();
             $newarea->setMapid($_POST['mapid']);
             $newarea->setDescription($_POST['descriptnew']);
+            $newarea->setParam($_POST['param']);
             $newarea->setAreatype($_POST['newtype']);
             $newarea->setArealink($link);
             $newarea->setColor(str_replace('#', '', $becolors[0]['color']));
