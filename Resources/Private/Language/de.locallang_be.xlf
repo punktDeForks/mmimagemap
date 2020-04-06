@@ -106,7 +106,7 @@
 
 			<trans-unit id="tx_mmimagemap.link">
 				<source>Link</source>
-				<target>Link</target>
+				<target>Link (TYPO3-Seite = t3://page?uid=[Id der Seite])</target>
 			</trans-unit>
 
 			<trans-unit id="tx_mmimagemap.rectangle">

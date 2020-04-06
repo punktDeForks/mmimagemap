@@ -58,10 +58,12 @@ m_toggle["d"] = "<f:translate key="LLL:EXT:mmimagemap/Resources/Private/Language
 					</select>
 				</div>
 			</td>
-			<td style="padding:0px 10px 0px 0px; width:30%;">
+			<td style="padding:0px 10px 0px 0px; width:30%;"><input type="text" name="data[mmimagemap][editform][link]" />
+				<f:comment>
 				<div style="float:left;">
 					<f:format.raw>{urlfield}</f:format.raw>
 				</div>
+				</f:comment>
 				<div style="float:left; width:30px;"></div>
 			</td>
 		</tr>
@@ -495,12 +497,14 @@ var _delete = '<f:translate key="LLL:EXT:mmimagemap/Resources/Private/Language/l
 
 </f:if>
 <!-- ###POLY_PART### -->
-	
 	<a href="Javascript:a_toggle('link');" class="atoggle"><h3><div class="icon minus" id="linktoggle" title="<f:translate key="LLL:EXT:mmimagemap/Resources/Private/Language/locallang_be.xlf:tx_mmimagemap.showoptions" />"></div> <f:translate key="LLL:EXT:mmimagemap/Resources/Private/Language/locallang_be.xlf:tx_mmimagemap.link" />:</h3></a>
 	<table id="link" class="toolwrap" cellpadding="0" cellspacing="0" style="display:block;margin:5px 0px 10px 0px; width:100%;">
 		<tr>
 			<td style="padding:5px;"><div><f:translate key="LLL:EXT:mmimagemap/Resources/Private/Language/locallang_be.xlf:tx_mmimagemap.link" />:</div>
-				<div style="width:100%"><f:format.raw>{editurlfield}</f:format.raw></div>
+				<input type="text" name="data[mmimagemap][editform][editlink]" value="{area.area.arealink}"/>
+				<f:comment>
+					<div style="width:100%"><f:format.raw>{editurlfield}</f:format.raw></div>
+				</f:comment>
 				<div style="padding-top:10px"><f:translate key="LLL:EXT:mmimagemap/Resources/Private/Language/locallang_be.xlf:tx_mmimagemap.param" /></div>
 				<input type="text" id="param" name="param" value="{area.area.param}" style="width:100%;" />
 			</td>
