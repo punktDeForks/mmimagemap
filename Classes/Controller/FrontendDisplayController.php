@@ -1,5 +1,6 @@
 <?php
 namespace MikelMade\Mmimagemap\Controller;
+use MikelMade\Mmimagemap\Domain\Model\Area;
 use TYPO3\CMS\Core\Core\Environment;
 /***************************************************************
  *	Copyright notice
@@ -116,7 +117,7 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
         $areas = [];
         $allareas = $this->areaRepository->findByMapid((int)$this->settings['map']);
         $cboxes = [];
-        
+
         foreach ($allareas as $area) {
             $areadata = $this->areaRepository->GetCompleteArea($area->getUid());
         
@@ -125,6 +126,8 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
             $thisarea['uid'] = $area->getUid();
             $thisarea['shape'] = $areashapes[$area->getAreatype()];
             $thisarea['coords'] = '';
+            $thisarea['name'] = $area->getDescription();
+
             switch ($areadata['area']['areatype']) {
                 case 0:
                     $thisarea['coords'] .= $areadata['points']['x'].','.$areadata['points']['y'].','.((int)$areadata['points']['x']+(int)$areadata['points']['w']).','.((int)$areadata['points']['y']+(int)$areadata['points']['h']);
@@ -172,17 +175,17 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
                 } else {
                     $areadata['contentpopup']['border'] = '';
                 }
-                
+
                 if (strlen($areadata['contentpopup']['popupbackgroundcolor']) != 0) {
                     $areadata['contentpopup']['background'] = 'background-color:#'.$areadata['contentpopup']['popupbackgroundcolor'].';';
                 } else {
                     $areadata['contentpopup']['background'] = '';
                 }
-                
+
                 if (strlen($areadata['contentpopup']['popupbordercolor']) != 0) {
                     $areadata['contentpopup']['bcolor'] = '#'.$areadata['contentpopup']['popupbordercolor'];
                 }
-                
+
                 $cboxes[] = $areadata['contentpopup'];
                 $thisparams['mouseover'] = $thisparams['mouseover'].'Javascript:mmimagemap_showCBox(\'txmmimagemap_cbox_'.$areadata['contentpopup']['uid'].'\');';
                 $thisparams['mouseout'] = $thisparams['mouseout'].'Javascript:mmimagemap_hideCBox(\'txmmimagemap_cbox_'.$areadata['contentpopup']['uid'].'\');';
