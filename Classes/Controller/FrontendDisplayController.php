@@ -2,6 +2,7 @@
 namespace MikelMade\Mmimagemap\Controller;
 use MikelMade\Mmimagemap\Domain\Model\Area;
 use TYPO3\CMS\Core\Core\Environment;
+
 /***************************************************************
  *	Copyright notice
  *
@@ -34,7 +35,6 @@ use TYPO3\CMS\Core\Core\Environment;
     */
 class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
     /**
         *
         *	@var \MikelMade\Mmimagemap\Domain\Repository\MapRepository
@@ -225,9 +225,10 @@ class FrontendDisplayController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
             
             $areas[] = $thisarea;
         }
-        
+
         $this->view->assign('cboxes', $cboxes);
         $this->view->assign('map', $mapdata);
         $this->view->assign('areas', $areas);
+        $this->view->assign('data', $this->configurationManager->getContentObject()->data);
     }
 }
