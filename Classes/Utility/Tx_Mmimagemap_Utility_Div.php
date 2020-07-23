@@ -121,7 +121,7 @@ class Tx_Mmimagemap_Utility_Div
             } else {
                 exec($impath.'convert -resize '.$new_width.'!x'.$new_height.'! -quality 100 -unsharp 1.5x1.2+1.0+0.10 '.Environment::getPublicPath() . '/'.'fileadmin/'.$path.$filename.' '.$new_path.'.jpg');
             }
-            rename($new_path.'.jpg', $new_path);
+            rename($new_path.'.jpg', $new_path . '.jpg');
         }
         return md5($path.$salt.$filename);
     }
@@ -136,7 +136,7 @@ class Tx_Mmimagemap_Utility_Div
     {
         $salt = 'mmimagemap';
         $temppath = Environment::getPublicPath() . '/'.'fileadmin/_processed_/mmimagemap';
-        $del_path	 = $temppath.'/'.md5($path.$salt.$filename);
+        $del_path	 = $temppath.'/'.md5($path.$salt.$filename) . '.jpg';
         if (file_exists($del_path)) {
             unlink($del_path);
         }
