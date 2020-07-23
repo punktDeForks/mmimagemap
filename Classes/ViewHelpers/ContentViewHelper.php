@@ -1,6 +1,9 @@
 <?php
 namespace MikelMade\Mmimagemap\ViewHelpers;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+
 /**
  * (c) 2019 MMichael Perlbach
  */
@@ -33,7 +36,9 @@ class ContentViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHe
 				'source' => $uid,
 				'dontCheckPid' => 1
 			);
-				
-			return $this->objectManager->get('TYPO3\CMS\Frontend\ContentObject\RecordsContentObject')->render($conf);
+
+			$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
+			return $objectManager->get('TYPO3\CMS\Frontend\ContentObject\RecordsContentObject')->render($conf);
 		}
 }
