@@ -496,7 +496,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $cbox->setPopupx((int)$_POST['cb_x']);
                 $cbox->setPopupy((int)$_POST['cb_y']);
                 $cbox->setPopupbordercolor(str_replace('#', '', $_POST['cb_bcol']));
-                $cbox->setPopupborderwidth(str_replace('#', '', $_POST['cb_borderthickness']));
+                $cbox->setPopupborderwidth((int)str_replace('#', '', $_POST['cb_borderthickness']));
                 $cbox->setContentid((int)$_POST['cbid']);
                 $cbox->setActive($active);
                 
