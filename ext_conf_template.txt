@@ -29,7 +29,7 @@ colors{
 	def_color4 = #00FFFF|en:Turquoise,de:T&uuml;rkis
 
   # cat=colors/; type=string; label=default border color 5
-	def_color5 = #8D38C|en:Violet,de:Violett
+	def_color5 = #8D38C0|en:Violet,de:Violett
 
   # cat=colors/; type=string; label=default border color 6
 	def_color6 = #FF00FF|en:Magenta,de:Magenta
