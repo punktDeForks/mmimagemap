@@ -277,12 +277,12 @@ class MapRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     break;
                 }
             
-                if (file_exists($oldimg)) {
+                if (is_file($oldimg)) {
                     unlink($oldimg);
                 }
                 $map = $this->findByUid($mapid);
             
-                if (file_exists($abs_apic)) {
+                if (is_file($abs_apic)) {
                     $map->setAltfile($apic);
                 } else {
                     $map->setAltfile('');
@@ -366,10 +366,10 @@ class MapRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     }
                 
                     $updatearea = $arearepo->findByUid($area['uid']);
-                    if (file_exists($oldimg)) {
+                    if (is_file($oldimg)) {
                         unlink($oldimg);
                     }
-                    if (file_exists($ypic)) {
+                    if (is_file($ypic)) {
                         $updatearea->setFealtfile($area['uid'].'_'.$apic);
                     } else {
                         $updatearea->setFealtfile('');
