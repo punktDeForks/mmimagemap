@@ -105,19 +105,22 @@ class AreaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function GetCompleteArea($areaid)
     {
         $ret = array();
-        $query = $this->createQuery();
-        $query->statement('SELECT * from tx_mmimagemap_domain_model_area where uid='.(int)$areaid);
-        $res = $query->execute(true);
-        
-        $ret['area'] = $res[0];
-        $ret['area']['areatypelabel'] = $this->areatypelabels[$ret['area']['areatype']];
-        $ret['points'] = $this->GetPoints($areaid, $ret['area']['areatype']);
-        
-        $query = $this->createQuery();
-        $query->statement('SELECT * from tx_mmimagemap_domain_model_contentpopup where areaid='.(int)$areaid);
-        $res = $query->execute(true);
-        $ret['contentpopup'] = $res[0];
-        
+
+        if ((int)$areaid > 0) {
+            $query = $this->createQuery();
+            $query->statement('SELECT * from tx_mmimagemap_domain_model_area where uid='.(int)$areaid);
+            $res = $query->execute(true);
+
+            $ret['area'] = $res[0];
+            $ret['area']['areatypelabel'] = $this->areatypelabels[$ret['area']['areatype']];
+            $ret['points'] = $this->GetPoints($areaid, $ret['area']['areatype']);
+
+            $query = $this->createQuery();
+            $query->statement('SELECT * from tx_mmimagemap_domain_model_contentpopup where areaid='.(int)$areaid);
+            $res = $query->execute(true);
+            $ret['contentpopup'] = $res[0];
+        }
+
         return $ret;
     }
     
