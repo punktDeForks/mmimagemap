@@ -21,7 +21,7 @@ if (!defined('TYPO3_MODE')) {
 );
 
 // Create uploads folder if not exists
-$uploadFolder = TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/uploads/tx_mmimagemap';
+$uploadFolder = \TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/uploads/tx_mmimagemap';
 if (!is_dir($uploadFolder)) {
     TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($uploadFolder);
 }
