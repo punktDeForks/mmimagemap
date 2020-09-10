@@ -134,7 +134,7 @@ class MigrateMwImagemap extends Command
                     [
                         'uid' => (int)$item['id'],
                         'areaid' => (int)$item['aid'],
-                        'num' => (int)$item['num'],
+                        'num' => ((int)$item['num'] === 0 ? 2 : (int)$item['num']),
                         'x' => (int)$item['x'],
                         'y' => (int)$item['y']
                     ])
