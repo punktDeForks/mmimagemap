@@ -13,10 +13,6 @@ if (!defined('TYPO3_MODE')) {
     'Pi1',
     [
         \MikelMade\Mmimagemap\Controller\FrontendDisplayController::class => 'list'
-    ],
-    // non-cacheable actions
-    [
-        \MikelMade\Mmimagemap\Controller\FrontendDisplayController::class => 'list'
     ]
 );
 
