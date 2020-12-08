@@ -24,11 +24,18 @@ namespace MikelMade\Mmimagemap\Controller;
  *	This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use MikelMade\Mmimagemap\Domain\Repository\AreaRepository;
+use MikelMade\Mmimagemap\Domain\Repository\BcolorsRepository;
+use MikelMade\Mmimagemap\Domain\Repository\ContentpopupRepository;
+use MikelMade\Mmimagemap\Domain\Repository\MapRepository;
+use MikelMade\Mmimagemap\Domain\Repository\PointRepository;
 use TYPO3\CMS\Backend\Form\Element\InputLinkElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
  *
@@ -37,19 +44,19 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
     *	@license	http://www.gnu.org/licenses/gpl.html	GNU	General	Public	License,	version	3	or	later
     *
     */
-class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class BackendController extends ActionController
 {
     
     /**
         *
-        *	@var \MikelMade\Mmimagemap\Domain\Repository\MapRepository
+        *	@var MapRepository
         *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $mapRepository;
     
     /**
         *
-        *	@var	\MikelMade\Mmimagemap\Domain\Repository\AreaRepository
+        *	@var	AreaRepository
         *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $areaRepository;
@@ -57,7 +64,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
         *	pointRepository
         *
-        *	@var	\MikelMade\Mmimagemap\Domain\Repository\PointRepository
+        *	@var	PointRepository
         *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $pointRepository;
@@ -65,7 +72,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
         *	bcolorsRepository
         *
-        *	@var	\MikelMade\Mmimagemap\Domain\Repository\BcolorsRepository
+        *	@var	BcolorsRepository
         *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $bcolorsRepository;
@@ -74,14 +81,19 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
         *	contentpopupRepository
         *
-        *	@var	\MikelMade\Mmimagemap\Domain\Repository\ContentpopupRepository
+        *	@var	ContentpopupRepository
         *	@TYPO3\CMS\Extbase\Annotation\Inject
         */
     protected $contentpopupRepository;
 
+    /**
+     * @var PersistenceManager
+     */
+    protected $pManager;
+
     public function initializeSettings()
     {
-        $this->pManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $this->pManager = $this->objectManager->get(PersistenceManager::class);
     }
         
     public function initializeAction()
@@ -114,11 +126,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $files = array();
             $dh = opendir($abspath);
             while (($file = readdir($dh)) !== false) {
-                if ($file != '.' && $file != '..') {
-                    if (strpos(strtolower($file), '.png') !== strlen($file) - 4
-                    && strpos(strtolower($file), '.jpg') !== strlen($file) - 4
-                    && strpos(strtolower($file), '.jpeg') !== strlen($file) - 5
-                    && strpos(strtolower($file), '.gif') !== strlen($file) - 4) {
+                if ($file !== '.' && $file !== '..') {
+                    if (!$this->filenameEndsOnImageSuffix($file)) {
                         continue;
                     }
                     if (strpos($file, 't_') === 0) {
@@ -174,6 +183,9 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     $image = $_POST['use_file'];
                 }
             } else {
+                if (!$this->filenameEndsOnImageSuffix($_FILES['usr_file']['name'])) {
+                    throw new \Exception('not an image file', 1607431914);
+                }
                 $image = $this->mapRepository->CheckForDoubleImages($_FILES['usr_file']['name'], $_FILES['usr_file']['name'], $_POST['path']);
                 move_uploaded_file($_FILES['usr_file']['tmp_name'], Environment::getPublicPath() . '/'.'fileadmin/'.$_POST['path'].$image);
             }
@@ -194,7 +206,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $areas = $this->areaRepository->GetAreas($_POST['use_map']);
                 
                 foreach ($bcolors as $bcolor) {
-                    $newbcolor = new \MikelMade\Mmimagemap\Domain\Model\Bcolor();
+                    $newbcolor = new \MikelMade\Mmimagemap\Domain\Model\Bcolors();
                     $newbcolor->setMapid($mapid);
                     $newbcolor->setColorname($bcolor['colorname']);
                     $newbcolor->setColor($bcolor['color']);
@@ -205,8 +217,8 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 foreach ($areas as $area) {
                     $newarea = new \MikelMade\Mmimagemap\Domain\Model\Area();
                     $newarea->setMapid($mapid);
-                    $newarea->setMaptype($area['maptype']);
-                    $newarea->setLink($area['link']);
+                    $newarea->setAreatype($area['maptype']);
+                    $newarea->setArealink($area['link']);
                     $newarea->setDescription($area['description']);
                     $newarea->setColor($area['color']);
                     $newarea->setParam($area['param']);
@@ -266,7 +278,10 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $prevaltimage = $map->getAltfile();
         
         
-        if ($_POST['action'] == 'chg_name') {
+        if ($_POST['action'] === 'chg_name') {
+            if (!$this->filenameEndsOnImageSuffix($_FILES['usr_file']['name'])) {
+                throw new \Exception('not an image file', 1607432002);
+            }
             $file = $_FILES['usr_file'];
             $image = $file['name'];
             $name = $_POST['name'];
@@ -293,7 +308,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->mapRepository->MakeFePics($mapid, $this->areaRepository);
         }
         
-        if ($_POST['action'] == 'del_map') {
+        if ($_POST['action'] === 'del_map') {
             if (isset($_POST['del_unused'])) {
                 $unused = $this->mapRepository->CheckForUnusedPic($_POST['path'], $previmage, $mapid);
                 if ($unused == true) {
@@ -307,7 +322,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             $areas = $this->areaRepository->GetAreas($mapid);
             foreach ($areas as $area) {
-                $points = $this->pointrepository->getPoints($area['uid']);
+                $points = $this->pointRepository->getPoints($area['uid']);
                 foreach ($points as $point) {
                     $delpoint = $this->pointRepository->findByUid($point['uid']);
                     $this->pointRepository->remove($delpoint);
@@ -386,7 +401,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $path = $patharr[1];
         }
         
-        if (isset($_POST['action']) && $_POST['action'] == 'addarea') {
+        if (isset($_POST['action']) && $_POST['action'] === 'addarea') {
             if (strlen($_POST['descript']) == 0) {
                 $_POST['descript'] = $this->areaRepository->GenerateAreaName();
             }
@@ -425,7 +440,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->mapRepository->MakeFePics($_POST['mapid'], $this->areaRepository);
         }
         
-        if (isset($_POST['action']) && $_POST['action'] == 'addcolor') {
+        if (isset($_POST['action']) && $_POST['action'] === 'addcolor') {
             if (strlen($_POST['be_col']) > 0) {
                 if (preg_match('/^[a-f0-9]{6}$/i', $_POST['be_col'])) {
                     $_POST['be_col'] = '#'.$_POST['be_col'];
@@ -443,7 +458,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }
         
-        if ($_POST['action'] == 'delcolor') {
+        if ($_POST['action'] === 'delcolor') {
             $delcolor = $this->bcolorsRepository->findByUid((int)$_POST['actiondata']);
             if (count($delcolor) > 0) {
                 $color = str_replace('#', $_POST['color']);
@@ -458,7 +473,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
         }
         
-        if (isset($_POST['action']) && $_POST['action'] == 'savearea') {
+        if (isset($_POST['action']) && $_POST['action'] === 'savearea') {
             if (!isset($_POST['blink'])) {
                 $_SESSION['mmim_blink'] = 0;
             }
@@ -598,7 +613,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->mapRepository->MakeFePics($mapid, $this->areaRepository);
         }
         
-        if (isset($_POST['action']) && $_POST['action'] == 'delarea') {
+        if (isset($_POST['action']) && $_POST['action'] === 'delarea') {
             $areaid = ((int)$_POST['actiondata'] == (int)$_POST['area_id']) ? 0 : (int)$_POST['area_id'];
             
             $delarea = $this->areaRepository->findByUid((int)$_POST['actiondata']);
@@ -618,7 +633,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->mapRepository->MakeFePics((int)$_POST['mapid'], $this->areaRepository);
         }
         
-        if (isset($_POST['action']) && $_POST['action'] == 'moveareas') {
+        if (isset($_POST['action']) && $_POST['action'] === 'moveareas') {
             $areas = explode(',', $_POST['actiondata']);
             $xmov = (int)$_POST['xmov'];
             $ymov = (int)$_POST['ymov'];
@@ -720,7 +735,7 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         * @param string $form
         * @param string $field
         *
-        *	@return	 void
+        *	@return	 string
     */
     private function createlinkbrowser($elm, $value='')
     {
@@ -753,5 +768,17 @@ class BackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $linkField = new InputLinkElement($nodeFactory, $options);
         $urlField = $linkField->render();
         return $urlField['html'];
+    }
+
+    /**
+     * @param string $file
+     * @return bool
+     */
+    protected function filenameEndsOnImageSuffix(string $file): bool
+    {
+        return (stripos($file, '.png') === strlen($file) - 4
+            || stripos($file, '.jpg') === strlen($file) - 4
+            || stripos($file, '.jpeg') === strlen($file) - 5
+            || stripos($file, '.gif') === strlen($file) - 4);
     }
 }
